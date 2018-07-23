@@ -50,15 +50,26 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='fne|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;hELib_EXPORTS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <Optimization>Full</Optimization>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>hELib.def</ModuleDefinitionFile>
       <SubSystem>Windows</SubSystem>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='static|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;hELib_EXPORTS;__E_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <Optimization>Full</Optimization>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>hELib.def</ModuleDefinitionFile>
@@ -77,6 +88,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="hELib.cpp" />
     <ClCompile Include="hELibTest.cpp" />
+    <ClCompile Include="SortCommands.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TestType.cpp" />
   </ItemGroup>
