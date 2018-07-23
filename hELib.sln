@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hELib", "hELib\hELib.vcxproj", "{6F6BCD83-825D-4ED1-9C99-1100C06CD9E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		fne|x86 = fne|x86
+		static|x86 = static|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F6BCD83-825D-4ED1-9C99-1100C06CD9E6}.fne|x86.ActiveCfg = fne|Win32
+		{6F6BCD83-825D-4ED1-9C99-1100C06CD9E6}.fne|x86.Build.0 = fne|Win32
+		{6F6BCD83-825D-4ED1-9C99-1100C06CD9E6}.static|x86.ActiveCfg = static|Win32
+		{6F6BCD83-825D-4ED1-9C99-1100C06CD9E6}.static|x86.Build.0 = static|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22152C91-9002-43B9-8523-0388A83B30E1}
+	EndGlobalSection
+EndGlobal
