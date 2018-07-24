@@ -35,27 +35,27 @@ constexpr void sortArray(LPBYTE ptr, int begin, int end, bool isDesc, DWORD comp
 {
 	if (compFuncAddr == NULL)
 		std::sort(reinterpret_cast<T*>(ptr) + begin - 1, reinterpret_cast<T*>(ptr) + end,
-		          [isDesc](const T& a, const T& b) -> bool
-		          {
-			          return isDesc ? (a > b) : (a < b);
-		          });
+			[isDesc](const T& a, const T& b) -> bool
+	{
+		return isDesc ? (a > b) : (a < b);
+	});
 	else
 	{
-		typedef BOOL (__stdcall *compFunc)(const T&, const T&);
+		typedef BOOL(__stdcall *compFunc)(const T&, const T&);
 		std::sort(reinterpret_cast<T*>(ptr) + begin - 1, reinterpret_cast<T*>(ptr) + end,
-		          reinterpret_cast<compFunc>(compFuncAddr));
+			reinterpret_cast<compFunc>(compFuncAddr));
 	}
 };
 
 void hELib_Sort_QuickSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf)
 {
 	pRetData->m_bool = false;
-	auto end = pArgInf[2].m_int;
+	if (pArgInf[1].m_int <= 0 || pArgInf[2].m_int < 0) return;
 
 	auto cntAry = 0;
 	const auto ptr = GetAryElementInf(*pArgInf[0].m_ppAryData, &cntAry);
-	if (end < 0) return;
 
+	auto end = pArgInf[2].m_int;
 	if (end == 0) end = cntAry;
 	if (end > cntAry) return;
 	pRetData->m_bool = true;
@@ -104,20 +104,20 @@ void hELib_Sort_QuickSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf
 		else
 		{
 			std::sort(
-				reinterpret_cast<char**>(ptr + (pArgInf[1].m_int - 1) * sizeof(char*)),
-				reinterpret_cast<char**>(ptr + end * sizeof(char*)),
+				reinterpret_cast<char**>(ptr) + pArgInf[1].m_int - 1,
+				reinterpret_cast<char**>(ptr) + end,
 				[pArgInf](char* & a, char* & b) -> bool
+			{
+				if (pArgInf[3].m_bool)
 				{
-					if (pArgInf[3].m_bool)
-					{
-						if (strcmp(b, a) < 0) return true;
-					}
-					else
-					{
-						if (strcmp(a, b) < 0) return true;
-					}
-					return false;
-				});
+					if (strcmp(b, a) < 0) return true;
+				}
+				else
+				{
+					if (strcmp(a, b) < 0) return true;
+				}
+				return false;
+			});
 		}
 		break;
 	case SDT_BIN:
@@ -133,26 +133,26 @@ void hELib_Sort_QuickSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf
 		else
 		{
 			std::sort(
-				reinterpret_cast<byte**>(ptr + (pArgInf[1].m_int - 1) * sizeof(byte*)),
-				reinterpret_cast<byte**>(ptr + end * sizeof(byte*)),
+				reinterpret_cast<byte**>(ptr) + pArgInf[1].m_int - 1,
+				reinterpret_cast<byte**>(ptr) + end,
 				[pArgInf](byte* & a, byte* & b) -> bool
+			{
+				if (pArgInf[3].m_bool)
 				{
-					if (pArgInf[3].m_bool)
-					{
-						if (strcmp(reinterpret_cast<char*>(b), reinterpret_cast<char*>(a)) < 0) return true;
-					}
-					else
-					{
-						if (strcmp(reinterpret_cast<char*>(a), reinterpret_cast<char*>(b)) < 0) return true;
-					}
-					return false;
-				});
+					if (strcmp(reinterpret_cast<char*>(b), reinterpret_cast<char*>(a)) < 0) return true;
+				}
+				else
+				{
+					if (strcmp(reinterpret_cast<char*>(a), reinterpret_cast<char*>(b)) < 0) return true;
+				}
+				return false;
+			});
 		}
 		break;
 	default:
 		if (hasCompFunc)
 		{
-			typedef BOOL(__stdcall *compFunc)(int*, int*);
+			typedef BOOL(__stdcall *compFunc)(int *&, int *&);
 			std::sort(
 				reinterpret_cast<int**>(ptr) + pArgInf[1].m_int - 1,
 				reinterpret_cast<int**>(ptr) + end,
