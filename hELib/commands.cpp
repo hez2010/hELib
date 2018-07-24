@@ -5,8 +5,7 @@
 PFN_EXECUTE_CMD ExecuteCommands[] =
 {
 	hELibTest,
-	hELib_Sort_QuickSort,
-	hELib_Sort_GenericSort
+	hELib_Sort_QuickSort
 };
 
 #endif

@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="commands.cpp" />
+    <ClCompile Include="consts.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="hELib.cpp" />
     <ClCompile Include="hELibTest.cpp" />
