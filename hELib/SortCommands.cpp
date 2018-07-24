@@ -60,36 +60,36 @@ void hELib_Sort_QuickSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf
 	if (end > cntAry) return;
 	pRetData->m_bool = true;
 
-	const auto hasCompFunc = pArgInf[3].m_dwSubCodeAdr != NULL;
+	const auto hasCompFunc = pArgInf[4].m_dwSubCodeAdr != NULL;
 
 	switch (pArgInf[0].m_dtDataType & ~DT_IS_ARY)
 	{
 	case SDT_INT:
-		sortArray<INT>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[3].m_dwSubCodeAdr);
+		sortArray<INT>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[4].m_dwSubCodeAdr);
 		break;
 	case SDT_INT64:
-		sortArray<INT64>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[3].m_dwSubCodeAdr);
+		sortArray<INT64>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[4].m_dwSubCodeAdr);
 		break;
 	case SDT_BOOL:
-		sortArray<BOOL>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[3].m_dwSubCodeAdr);
+		sortArray<BOOL>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[4].m_dwSubCodeAdr);
 		break;
 	case SDT_BYTE:
-		sortArray<BYTE>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[3].m_dwSubCodeAdr);
+		sortArray<BYTE>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[4].m_dwSubCodeAdr);
 		break;
 	case SDT_SHORT:
-		sortArray<SHORT>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[3].m_dwSubCodeAdr);
+		sortArray<SHORT>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[4].m_dwSubCodeAdr);
 		break;
 	case SDT_SUB_PTR:
-		sortArray<DWORD>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[3].m_dwSubCodeAdr);
+		sortArray<DWORD>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[4].m_dwSubCodeAdr);
 		break;
 	case SDT_FLOAT:
-		sortArray<FLOAT>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[3].m_dwSubCodeAdr);
+		sortArray<FLOAT>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[4].m_dwSubCodeAdr);
 		break;
 	case SDT_DATE_TIME:
-		sortArray<DATE>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[3].m_dwSubCodeAdr);
+		sortArray<DATE>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[4].m_dwSubCodeAdr);
 		break;
 	case SDT_DOUBLE:
-		sortArray<DOUBLE>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[3].m_dwSubCodeAdr);
+		sortArray<DOUBLE>(ptr, pArgInf[1].m_int, end, pArgInf[3].m_bool, pArgInf[4].m_dwSubCodeAdr);
 		break;
 	case SDT_TEXT:
 		if (hasCompFunc)
@@ -98,7 +98,7 @@ void hELib_Sort_QuickSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf
 			std::sort(
 				reinterpret_cast<char**>(ptr) + pArgInf[1].m_int - 1,
 				reinterpret_cast<char**>(ptr) + end,
-				reinterpret_cast<compFunc>(pArgInf[3].m_dwSubCodeAdr)
+				reinterpret_cast<compFunc>(pArgInf[4].m_dwSubCodeAdr)
 			);
 		}
 		else
@@ -127,7 +127,7 @@ void hELib_Sort_QuickSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf
 			std::sort(
 				reinterpret_cast<byte**>(ptr) + pArgInf[1].m_int - 1,
 				reinterpret_cast<byte**>(ptr) + end,
-				reinterpret_cast<compFunc>(pArgInf[3].m_dwSubCodeAdr)
+				reinterpret_cast<compFunc>(pArgInf[4].m_dwSubCodeAdr)
 			);
 		}
 		else
@@ -156,7 +156,7 @@ void hELib_Sort_QuickSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf
 			std::sort(
 				reinterpret_cast<int**>(ptr) + pArgInf[1].m_int - 1,
 				reinterpret_cast<int**>(ptr) + end,
-				reinterpret_cast<compFunc>(pArgInf[3].m_dwSubCodeAdr)
+				reinterpret_cast<compFunc>(pArgInf[4].m_dwSubCodeAdr)
 			);
 		}
 		else pRetData->m_bool = false;
