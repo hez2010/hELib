@@ -12,10 +12,19 @@ ARG_INFO hELib_Sort_QuickSort__CommandArgs[] =
 	{ _WT("pIsDesc"), _WT("Indicate whether array should be sorted by descending."), 0, 0, SDT_BOOL, false, AS_HAS_DEFAULT_VALUE }
 };
 
+
+ARG_INFO hELib_Sort_GenericSort__CommandArgs[] =
+{
+	{ _WT("pArray"), _WT("Array need to be sorted."), 0, 0, _SDT_ALL, NULL, AS_RECEIVE_VAR_ARRAY },
+	{ _WT("pBegin"), _WT("Indicate the beginning position the array should be sorted, starting from 1."), 0, 0, SDT_INT, 1, AS_HAS_DEFAULT_VALUE },
+	{ _WT("pEnd"), _WT("Indicate the ending position the array should be sorted, 0 represents sorting the whole array."), 0, 0, SDT_INT, 0, AS_HAS_DEFAULT_VALUE },
+	{ _WT("pCompFunc"), _WT("Provide the custom comparing function."), 0, 0, SDT_SUB_PTR, NULL, AS_DEFAULT_VALUE_IS_EMPTY }
+};
+
 #endif
 
 template<typename T>
-constexpr inline auto sortArray = [](LPBYTE ptr, int begin, int end, bool isDesc) -> void
+constexpr inline void sortArray(LPBYTE ptr, int begin, int end, bool isDesc)
 {
 	std::sort(reinterpret_cast<T*>(ptr) + begin - 1, reinterpret_cast<T*>(ptr) + end,
 		[isDesc](const T& a, const T& b) -> bool
@@ -105,4 +114,84 @@ void hELib_Sort_QuickSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf
 		break;
 	}
 	return;
+}
+
+typedef BOOL(__stdcall *compFunc)(int*, int*);
+
+void hELib_Sort_GenericSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf)
+{
+	pRetData->m_bool = false;
+	auto end = pArgInf[2].m_int;
+
+	auto cntAry = 0;
+	auto ptr = GetAryElementInf(*pArgInf[0].m_ppAryData, &cntAry);
+	if (end < 0) return;
+
+	if (end == 0) end = cntAry;
+	if (end > cntAry) return;
+	pRetData->m_bool = true;
+
+	if (pArgInf[3].m_dwSubCodeAdr == NULL)
+	{
+		switch (pArgInf[0].m_dtDataType & (~DT_IS_ARY))
+		{
+		case SDT_INT:
+			sortArray<INT>(ptr, pArgInf[1].m_int, end, false);
+			break;
+		case SDT_INT64:
+			sortArray<INT64>(ptr, pArgInf[1].m_int, end, false);
+			break;
+		case SDT_BOOL:
+			sortArray<BOOL>(ptr, pArgInf[1].m_int, end, false);
+			break;
+		case SDT_BYTE:
+			sortArray<BYTE>(ptr, pArgInf[1].m_int, end, false);
+			break;
+		case SDT_SHORT:
+			sortArray<SHORT>(ptr, pArgInf[1].m_int, end, false);
+			break;
+		case SDT_SUB_PTR:
+			sortArray<DWORD>(ptr, pArgInf[1].m_int, end, false);
+			break;
+		case SDT_FLOAT:
+			sortArray<FLOAT>(ptr, pArgInf[1].m_int, end, false);
+			break;
+		case SDT_DATE_TIME:
+			sortArray<DATE>(ptr, pArgInf[1].m_int, end, false);
+			break;
+		case SDT_DOUBLE:
+			sortArray<DOUBLE>(ptr, pArgInf[1].m_int, end, false);
+			break;
+		case SDT_TEXT:
+			std::sort(
+				reinterpret_cast<char**>(ptr) + pArgInf[1].m_int - 1,
+				reinterpret_cast<char**>(ptr) + end,
+				[pArgInf](char* &a, char* &b) -> bool
+			{
+				if (strcmp(a, b) < 0) return true;
+				return false;
+			});
+			break;
+		case SDT_BIN:
+			std::sort(
+				reinterpret_cast<byte**>(ptr) + pArgInf[1].m_int - 1,
+				reinterpret_cast<byte**>(ptr) + end,
+				[pArgInf](byte* &a, byte* &b) -> bool
+			{
+				if (strcmp(reinterpret_cast<char*>(a), reinterpret_cast<char*>(b)) < 0) return true;
+				return false;
+			});
+			break;
+		default:
+			pRetData->m_bool = false;
+			break;
+		}
+		return;
+	}
+	
+	std::sort(
+		reinterpret_cast<int**>(ptr) + pArgInf[1].m_int - 1,
+		reinterpret_cast<int**>(ptr) + end,
+		(compFunc)pArgInf[3].m_dwSubCodeAdr
+	);
 }
