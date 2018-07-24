@@ -94,7 +94,7 @@ void hELib_Sort_QuickSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf
 	case SDT_TEXT:
 		if (hasCompFunc)
 		{
-			typedef BOOL(__stdcall *compFunc)(char*, char*);
+			typedef BOOL(__stdcall *compFunc)(const char*, const char*);
 			std::sort(
 				reinterpret_cast<char**>(ptr) + pArgInf[1].m_int - 1,
 				reinterpret_cast<char**>(ptr) + end,
@@ -123,7 +123,7 @@ void hELib_Sort_QuickSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf
 	case SDT_BIN:
 		if (hasCompFunc)
 		{
-			typedef BOOL(__stdcall *compFunc)(byte*, byte*);
+			typedef BOOL(__stdcall *compFunc)(const byte*, const byte*);
 			std::sort(
 				reinterpret_cast<byte**>(ptr) + pArgInf[1].m_int - 1,
 				reinterpret_cast<byte**>(ptr) + end,
