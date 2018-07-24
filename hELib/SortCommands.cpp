@@ -41,7 +41,7 @@ constexpr void sortArray(LPBYTE ptr, int begin, int end, bool isDesc, DWORD comp
 		          });
 	else
 	{
-		typedef BOOL (__stdcall *compFunc)(T, T);
+		typedef BOOL (__stdcall *compFunc)(const T&, const T&);
 		std::sort(reinterpret_cast<T*>(ptr) + begin - 1, reinterpret_cast<T*>(ptr) + end,
 		          reinterpret_cast<compFunc>(compFuncAddr));
 	}
