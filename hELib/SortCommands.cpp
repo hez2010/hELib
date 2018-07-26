@@ -155,9 +155,10 @@ void hELib_Sort_QuickSort(PMDATA_INF pRetData, INT iArgCount, PMDATA_INF pArgInf
 		if (hasCompFunc)
 		{
 			typedef BOOL (__stdcall *compFunc)(int*&, int*&);
+			
 			std::sort(
-				reinterpret_cast<int**>(ptr) + pArgInf[1].m_int - 1,
-				reinterpret_cast<int**>(ptr) + end,
+				reinterpret_cast<int**>(reinterpret_cast<int*>(ptr) + pArgInf[1].m_int - 1),
+				reinterpret_cast<int**>(reinterpret_cast<int*>(ptr) + end),
 				reinterpret_cast<compFunc>(pArgInf[4].m_dwSubCodeAdr)
 			);
 		}

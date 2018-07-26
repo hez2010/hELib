@@ -7,10 +7,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hELib", "hELib\hELib.vcxpro
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		debug|x86 = debug|x86
 		fne|x86 = fne|x86
 		static|x86 = static|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F6BCD83-825D-4ED1-9C99-1100C06CD9E6}.debug|x86.ActiveCfg = debug|Win32
+		{6F6BCD83-825D-4ED1-9C99-1100C06CD9E6}.debug|x86.Build.0 = debug|Win32
 		{6F6BCD83-825D-4ED1-9C99-1100C06CD9E6}.fne|x86.ActiveCfg = fne|Win32
 		{6F6BCD83-825D-4ED1-9C99-1100C06CD9E6}.fne|x86.Build.0 = fne|Win32
 		{6F6BCD83-825D-4ED1-9C99-1100C06CD9E6}.static|x86.ActiveCfg = static|Win32
